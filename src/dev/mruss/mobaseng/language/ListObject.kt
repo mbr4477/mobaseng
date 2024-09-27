@@ -2,26 +2,14 @@ package dev.mruss.mobaseng.language
 
 import dev.mruss.mobaseng.language.exception.TypeMismatch
 
-class ListObject(override val type: IListType) :
-    Object(type, mapOf("size" to IntegerType), mapOf("size" to IntegerType.new(0))) {
+class ListObject(override val type: IListType) : Object(type) {
     private val items: MutableList<IObject> = mutableListOf()
 
-    override fun getAttr(name: String): IObject {
-        return when (name) {
-            "size" -> IntegerType.new(items.size)
-            else -> super.getAttr(name)
+    fun append(value: IObject) {
+        if (!value.isInstance(type.itemType)) {
+            throw TypeMismatch(type.itemType, value.type)
         }
-    }
-
-    override fun setAttr(name: String, value: IObject) {
-        if (name == "__append__") {
-            if (!value.isInstance(type.itemType)) {
-                throw TypeMismatch(type.itemType, value.type)
-            }
-            items.add(value)
-        } else {
-            super.setAttr(name, value)
-        }
+        items.add(value)
     }
 
     override fun get(index: Int): IObject {

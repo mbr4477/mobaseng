@@ -1,6 +1,7 @@
 package examples
 
 import dev.mruss.mobaseng.language.BooleanType
+import dev.mruss.mobaseng.language.ListObject
 import dev.mruss.mobaseng.language.StringType
 import dev.mruss.mobaseng.language.Type
 import dev.mruss.mobaseng.sysml.SysML
@@ -26,7 +27,7 @@ fun main() {
 
     val spacecraft = block.new().apply {
         setAttr("name", StringType.new("Spacecraft"))
-        getAttr("properties").setAttr("__append__", value.new().apply {
+        (getAttr("properties") as ListObject).append(value.new().apply {
             setAttr("name", StringType.new("hasGroundComms"))
             setAttr("type", sysml.Boolean)
         })
@@ -36,7 +37,7 @@ fun main() {
         setAttr("name", StringType.new("PDU"))
     }
 
-    spacecraft.getAttr("properties").setAttr("__append__", part.new().apply {
+    (spacecraft.getAttr("properties") as ListObject).append(part.new().apply {
         setAttr("name", StringType.new("pdu"))
         setAttr("type", pdu)
     })
@@ -48,7 +49,7 @@ fun main() {
         setAttr("isRealTime", BooleanType.new(true))
     }
 
-    spacecraft.getAttr("properties").setAttr("__append__", part.new().apply {
+    (spacecraft.getAttr("properties") as ListObject).append(part.new().apply {
         setAttr("name", StringType.new("missionSoftware"))
         setAttr("type", missionSoftware)
     })
