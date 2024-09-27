@@ -37,7 +37,7 @@ class SysML : Language() {
             "part",
             mapOf(
                 "name" to StringType,
-                "type" to TypeRef("<<block>>", this),
+                "type" to typeRef("<<block>>"),
                 "multiplicity" to StringType
             ),
             mapOf("multiplicity" to StringType.new("1")),

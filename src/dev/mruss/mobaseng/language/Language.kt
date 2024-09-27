@@ -25,4 +25,8 @@ open class Language : ILanguage {
     }
 
     override fun getBuiltIns(): List<IObject> = builtIns
+
+    override fun typeRef(name: String): TypeRef {
+        return TypeRef(name, this)
+    }
 }

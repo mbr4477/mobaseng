@@ -6,4 +6,5 @@ interface ILanguage {
     fun resolveType(name: String): IType
     fun declareBuiltIn(obj: IObject)
     fun getBuiltIns(): List<IObject>
+    fun typeRef(name: String): TypeRef
 }
