@@ -1,6 +1,8 @@
 package examples
 
+import dev.mruss.mobaseng.language.BooleanType
 import dev.mruss.mobaseng.language.StringType
+import dev.mruss.mobaseng.language.Type
 import dev.mruss.mobaseng.sysml.SysML
 
 fun main() {
@@ -37,6 +39,18 @@ fun main() {
     spacecraft.getAttr("properties").setAttr("__append__", part.new().apply {
         setAttr("name", StringType.new("pdu"))
         setAttr("type", pdu)
+    })
+
+    // Extend the SysML language
+    val softwareElement = Type("<<software>>", mapOf("isRealTime" to BooleanType), base = block)
+    val missionSoftware = softwareElement.new().apply {
+        setAttr("name", StringType.new("MissionSoftware"))
+        setAttr("isRealTime", BooleanType.new(true))
+    }
+
+    spacecraft.getAttr("properties").setAttr("__append__", part.new().apply {
+        setAttr("name", StringType.new("missionSoftware"))
+        setAttr("type", missionSoftware)
     })
 
     println(spacecraft)
