@@ -24,7 +24,7 @@ fun main() {
 
     val spacecraft = block.new().apply {
         setAttr("name", StringType.new("Spacecraft"))
-        getAttr("values").setAttr("__append__", value.new().apply {
+        getAttr("properties").setAttr("__append__", value.new().apply {
             setAttr("name", StringType.new("hasGroundComms"))
             setAttr("type", sysml.Boolean)
         })
@@ -34,7 +34,7 @@ fun main() {
         setAttr("name", StringType.new("PDU"))
     }
 
-    spacecraft.getAttr("parts").setAttr("__append__", part.new().apply {
+    spacecraft.getAttr("properties").setAttr("__append__", part.new().apply {
         setAttr("name", StringType.new("pdu"))
         setAttr("type", pdu)
     })

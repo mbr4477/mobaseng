@@ -1,3 +1,5 @@
 package dev.mruss.mobaseng.language.exception
 
-class AttributeNotFound(attr: String) : Exception("$attr not found")
+import dev.mruss.mobaseng.language.ITypeInfo
+
+class AttributeNotFound(attr: String, type: ITypeInfo) : Exception("attribute '$attr' not found on type '${type.name}'")

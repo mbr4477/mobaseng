@@ -3,7 +3,7 @@ package dev.mruss.mobaseng.language
 import dev.mruss.mobaseng.language.exception.TypeMismatch
 
 class ListObject(override val type: IListType) :
-    Object(type, mapOf("size" to IntegerType), mutableMapOf("size" to IntegerType.new(0))) {
+    Object(type, mapOf("size" to IntegerType), mapOf("size" to IntegerType.new(0))) {
     private val items: MutableList<IObject> = mutableListOf()
 
     override fun getAttr(name: String): IObject {

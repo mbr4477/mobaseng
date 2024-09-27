@@ -30,8 +30,19 @@ class SysML : Language() {
         declareBuiltIn(Real)
         declareBuiltIn(String)
 
-        val value = Type("value", mapOf("name" to StringType, "type" to valueType))
-        val part = Type("part", mapOf("name" to StringType, "type" to TypeRef("<<block>>", this)))
+        val propertyType = Type("propertyType")
+
+        val value = Type("value", mapOf("name" to StringType, "type" to valueType), base = propertyType)
+        val part = Type(
+            "part",
+            mapOf(
+                "name" to StringType,
+                "type" to TypeRef("<<block>>", this),
+                "multiplicity" to StringType
+            ),
+            mapOf("multiplicity" to StringType.new("1")),
+            base = propertyType
+        )
         declareType(StringType)
         declareType(valueType)
         declareType(value)
@@ -41,9 +52,8 @@ class SysML : Language() {
                 "<<block>>",
                 mapOf(
                     "name" to StringType,
-                    "parts" to ListType(part),
-                    "values" to ListType(value)
-                )
+                    "properties" to ListType(propertyType),
+                ),
             ),
         )
     }

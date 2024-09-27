@@ -4,16 +4,17 @@ import dev.mruss.mobaseng.language.exception.*
 
 open class Object(
     override val type: IType,
-    private val attrs: Map<String, IType>,
-    initializers: Map<String, IObject>
+    private val attrs: Map<String, IType> = mapOf(),
+    initializers: Map<String, IObject> = mapOf()
 ) : IObject {
     private val attrValues: MutableMap<String, IObject> = mutableMapOf()
 
     init {
         for (attrName in attrs.keys) {
-            setAttr(attrName, initializers[attrName] ?: throw UninitializedAttribute(
-                attrName
-            )
+            setAttr(
+                attrName, initializers[attrName] ?: throw UninitializedAttribute(
+                    attrName
+                )
             )
         }
     }
@@ -23,13 +24,13 @@ open class Object(
         var result = false
         while (objType != null && !result) {
             result = objType.name == type.name
-            objType = type.base
+            objType = objType.base
         }
         return result
     }
 
     override fun setAttr(name: String, value: IObject) {
-        val typeDef = attrs[name] ?: throw AttributeNotFound(name)
+        val typeDef = attrs[name] ?: throw AttributeNotFound(name, type)
         if (!value.isInstance(typeDef)) {
             throw TypeMismatch(typeDef, value.type)
         }
@@ -37,7 +38,7 @@ open class Object(
     }
 
     override fun getAttr(name: String): IObject {
-        return attrValues[name] ?: throw AttributeNotFound(name)
+        return attrValues[name] ?: throw AttributeNotFound(name, type)
     }
 
     override fun get(index: Int): IObject {
